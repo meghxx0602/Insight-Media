@@ -46,6 +46,57 @@ SARVAM_MODEL = os.getenv("SARVAM_STT_MODEL", "saaras:v2.5")
 _model = None
 
 
+def transcribe_youtube(video_url: str, language: str = "english") -> str:
+    """
+    Get transcript directly from YouTubeTranscript.dev for a YouTube URL.
+    """
+
+    api_key = os.getenv("YOUTUBETRANSCRIPT_API_KEY")
+
+    if not api_key:
+        raise RuntimeError(
+            "YOUTUBETRANSCRIPT_API_KEY is not set in environment / .env"
+        )
+
+    api_url = "https://www.youtubetranscript.dev/api/v2/transcribe"
+
+    language_code = "hi" if language.lower() == "hinglish" else "en"
+
+    headers = {
+        "Authorization": f"Bearer {api_key}",
+        "Content-Type": "application/json"
+    }
+
+    data = {
+        "video": video_url,
+        "language": language_code,
+        "format": {
+            "timestamp": False,
+            "paragraphs": True
+        }
+    }
+
+    response = requests.post(
+        api_url,
+        headers=headers,
+        json=data,
+        timeout=120
+    )
+
+    if not response.ok:
+        print(f"\n❌ YouTubeTranscript.dev returned {response.status_code}")
+        print(f"Response body: {response.text}\n")
+        response.raise_for_status()
+
+    result = response.json()
+
+    transcript = result.get("data", {}).get("transcript", {}).get("text", "")
+
+    if not transcript:
+        raise RuntimeError("No transcript was returned for this YouTube video.")
+
+    return clean_transcript(transcript)
+
 def load_model(): #Whisper ka small model load karta hai,
     #Har baar transcription ke liye model dobara load na ho, Ek baar load karke _model mein rakh deta hai.
 

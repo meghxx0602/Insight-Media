@@ -1,6 +1,6 @@
 from dotenv import load_dotenv
 from utils.audio_processor import process_input #chunks of audio return degi
-from core.transcriber import transcribe_all #chunks transcribe krne k liye
+from core.transcriber import transcribe_all, transcribe_youtube #chunks transcribe krne k liye
 from core.summarizer import summarize, generate_title 
 from core.extractor import extract_information
 from core.rag_engine import build_rag_chain, ask_question
@@ -12,9 +12,14 @@ load_dotenv()
 def run_pipeline(source :str, language :str = "english") -> dict:
     print("starting AI Video Assistant")
 
-    chunks = process_input(source)
+    if source.startswith("http://") or source.startswith("https://"):
+        print("Detected YouTube URL. Getting transcript from YouTubeTranscript.dev...")
+        transcript = transcribe_youtube(source, language)
+    else:
+        print("Detected local file. Processing with Whisper/Sarvam...")
+        chunks = process_input(source)
+        transcript = transcribe_all(chunks, language)
 
-    transcript = transcribe_all(chunks,language)
     print(f"raw transcription (first 300 characters ) {transcript[:300]}")
 
     title = generate_title(transcript)
