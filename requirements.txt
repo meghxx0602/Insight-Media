@@ -8,9 +8,9 @@ ffmpeg-python>=0.2.0              # FFmpeg bindings (FFmpeg binary must be insta
 
 # ── Speech-to-Text (local Whisper) ────────────────────────────────────────────
 openai-whisper>=20231117          # OpenAI Whisper (runs locally)
-torch>=2.2.0                      # PyTorch backend for Whisper
-torchaudio>=2.2.0                 # Audio utilities for PyTorch
-torchvision
+torch==2.11.0
+torchaudio==2.11.0
+torchvision==0.26.0
 audioop-lts; python_version >= "3.13"
 
 # ── Translation (Hindi → English) ─────────────────────────────────────────────
