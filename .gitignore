@@ -1,0 +1,15 @@
+# Virtual environment
+.venv/
+
+# Secrets
+.env
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Downloaded media
+downloads/
+
+# Local ChromaDB
+vectore_db/
