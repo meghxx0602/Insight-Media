@@ -55,7 +55,7 @@ Input (YouTube URL / Local File)
 4. Add a `.env` file in `/home/runner/work/Insight-Media/Insight-Media` with:
    ```env
    GROQ_API_KEY=your_key_here
-   YOUTUBETRANSCRIPT_API_KEY=your_key_here
+   YOUTUBE_TRANSCRIPT_API_KEY=your_key_here
    SARVAM_API_KEY=your_key_here
    ```
 5. Run the app:
