@@ -4,6 +4,19 @@ from pathlib import Path
 from dotenv import load_dotenv
 import streamlit as st
 
+import torch
+import torchaudio
+import torchvision
+import whisper
+import sys
+
+# TEMPORARY: Check Cloud versions
+st.write("Python:", sys.version)
+st.write("Torch:", torch.__version__)
+st.write("Torchaudio:", torchaudio.__version__)
+st.write("Torchvision:", torchvision.__version__)
+st.write("Whisper:", whisper.__file__)
+
 # Load .env before importing project modules
 BASE_DIR = Path(__file__).resolve().parent
 load_dotenv(BASE_DIR / ".env")
