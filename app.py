@@ -594,19 +594,17 @@ elif page == "NEW ANALYSIS":
             ]
         )
 
-        if uploaded_file:
+if uploaded_file:
 
-            temp_dir = tempfile.gettempdir()
+    suffix = Path(uploaded_file.name).suffix
 
-            file_path = os.path.join(
-                temp_dir,
-                uploaded_file.name
-            )
+    with tempfile.NamedTemporaryFile(
+        delete=False,
+        suffix=suffix
+    ) as temp_file:
+        temp_file.write(uploaded_file.getbuffer())
 
-            with open(file_path, "wb") as f:
-                f.write(uploaded_file.getbuffer())
-
-            source = file_path
+    source = temp_file.name
 
     language = st.selectbox(
         "Language",
