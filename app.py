@@ -594,17 +594,17 @@ elif page == "NEW ANALYSIS":
             ]
         )
 
-if uploaded_file:
+        if uploaded_file:
 
-    suffix = Path(uploaded_file.name).suffix
+            suffix = Path(uploaded_file.name).suffix
 
-    with tempfile.NamedTemporaryFile(
-        delete=False,
-        suffix=suffix
-    ) as temp_file:
-        temp_file.write(uploaded_file.getbuffer())
+            with tempfile.NamedTemporaryFile(
+                delete=False,
+                suffix=suffix
+            ) as temp_file:
+                temp_file.write(uploaded_file.getbuffer())
 
-    source = temp_file.name
+            source = temp_file.name
 
     language = st.selectbox(
         "Language",
